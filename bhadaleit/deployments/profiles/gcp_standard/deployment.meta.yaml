@@ -1,0 +1,15 @@
+profile_id: gcp_standard
+display_name: "GCP — Standard (GKE + Vertex AI)"
+description: "Default production profile using GKE with node pools and Vertex AI for models."
+hosts:
+  - type: gcp
+    provider: gcp
+    infra_module: infra/providers/gcp/gke_module
+    default_region: us-central1
+    required_approvals: false
+runtimes:
+  - kubernetes: true
+  - vertex_ai: true
+policies:
+  cost_center: "ENG"
+  max_monthly_cost_usd: 5000

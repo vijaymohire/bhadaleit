@@ -1,0 +1,8 @@
+project_id: baremetal_deployment_template
+display_name: "BareMetal Deployment Template"
+envs:
+  - dev
+  - test
+  - prod
+artifacts_bucket: "gs://<your-bucket>"
+description: "Template for on-prem baremetal cluster deployments (MAAS/Ansible/Terraform-metal)"

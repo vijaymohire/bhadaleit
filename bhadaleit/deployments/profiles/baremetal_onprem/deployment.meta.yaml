@@ -1,0 +1,15 @@
+profile_id: baremetal_onprem
+display_name: "BareMetal On-Prem"
+hosts:
+  - type: baremetal
+    provider: onprem
+    infra_module: infra/providers/baremetal/maas_module
+    site: "dc-nyc-1"
+    required_approvals: true
+runtimes:
+  - kubernetes: optional
+  - slurm: true
+  - qpu_access: optional
+policies:
+  cost_center: "HW"
+  capex_budget_usd: 200000
