@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
 # create_company_scaffold_full.sh
-# Creates the full company scaffold (folders + README placeholders)
+# Creates the full company scaffold including QAI BareMetal, deployments, command center, tech ecosystem, research hub, admin UI, etc.
 # Usage:
 #   chmod +x create_company_scaffold_full.sh
-#   ./create_company_scaffold_full.sh
+#   ./create_company_scaffold_full.sh [root_folder]
+# If no root_folder provided, default is "bhadaleit".
+# If you pass ".", the scaffold will be created in the current directory (repo root).
 
 set -euo pipefail
-ROOT="bhadaleit"
 
-# Full directory list (one entry per important folder)
+# Accept optional root arg
+if [ "${1:-}" = "" ]; then
+  ROOT="bhadaleit"
+else
+  ROOT="$1"
+fi
+
+echo "Using ROOT = ${ROOT}"
+
+# Full directory list (complete, expanded)
 DIRS=(
-# org_framework (expanded)
 "${ROOT}/org_framework/01_organization"
 "${ROOT}/org_framework/02_org_framework"
 "${ROOT}/org_framework/03_org_service_module"
@@ -443,9 +452,12 @@ echo "Creating ${#DIRS[@]} directories under ./${ROOT} ..."
 
 for d in "${DIRS[@]}"; do
   mkdir -p "$d"
+  # add .gitkeep so folder is tracked by Git
+  touch "$d/.gitkeep"
 done
 
-# Create a set of README placeholders for top-level and key directories
+echo "Creating README placeholders in top-level and key folders..."
+# create a README in many high-level folders
 TOP_READMES=(
 "${ROOT}/README.md"
 "${ROOT}/org_framework/README.md"
@@ -478,26 +490,21 @@ TOP_READMES=(
 echo "Creating README placeholders..."
 for r in "${TOP_READMES[@]}"; do
   if [ ! -f "$r" ]; then
+    mkdir -p "$(dirname "$r")"
     cat > "$r" <<EOF
 # $(basename "$(dirname "$r")")
-This folder is part of the Company scaffold (V1.1+).
+This folder is part of the Company scaffold (V1.2).
 Place relevant artifacts, diagrams, manifests or README content here.
 EOF
   fi
 done
 
-# Create a few starter files useful to commit (meta examples)
-META_FILES=(
-"${ROOT}/projects/project-templates/baremetal_deployment_template/meta.yaml"
-"${ROOT}/deployments/profiles/gcp_standard/deployment.meta.yaml"
-"${ROOT}/deployments/profiles/baremetal_onprem/deployment.meta.yaml"
-"${ROOT}/tech_ecosystem/inventory/tech_ecosystem_inventory_v1.xlsx"
-)
+echo "Creating starter meta files (deployment meta examples, project meta, tech inventory placeholder)..."
 
-echo "Creating starter meta files (empty/skeletal) where helpful..."
-# skeletal meta.yaml for project template
-if [ ! -f "${META_FILES[0]}" ]; then
-  cat > "${META_FILES[0]}" <<'YAML'
+# create project template meta
+if [ ! -f "${ROOT}/projects/project-templates/baremetal_deployment_template/meta.yaml" ]; then
+  mkdir -p "${ROOT}/projects/project-templates/baremetal_deployment_template"
+  cat > "${ROOT}/projects/project-templates/baremetal_deployment_template/meta.yaml" <<'YAML'
 project_id: baremetal_deployment_template
 display_name: "BareMetal Deployment Template"
 envs:
@@ -509,9 +516,10 @@ description: "Template for on-prem baremetal cluster deployments (MAAS/Ansible/T
 YAML
 fi
 
-# skeletal deployment.meta for gcp_standard
-if [ ! -f "${META_FILES[1]}" ]; then
-  cat > "${META_FILES[1]}" <<'YAML'
+# gcp_standard deployment meta
+if [ ! -f "${ROOT}/deployments/profiles/gcp_standard/deployment.meta.yaml" ]; then
+  mkdir -p "${ROOT}/deployments/profiles/gcp_standard"
+  cat > "${ROOT}/deployments/profiles/gcp_standard/deployment.meta.yaml" <<'YAML'
 profile_id: gcp_standard
 display_name: "GCP — Standard (GKE + Vertex AI)"
 description: "Default production profile using GKE with node pools and Vertex AI for models."
@@ -530,9 +538,10 @@ policies:
 YAML
 fi
 
-# skeletal deployment.meta for baremetal_onprem
-if [ ! -f "${META_FILES[2]}" ]; then
-  cat > "${META_FILES[2]}" <<'YAML'
+# baremetal_onprem deployment meta
+if [ ! -f "${ROOT}/deployments/profiles/baremetal_onprem/deployment.meta.yaml" ]; then
+  mkdir -p "${ROOT}/deployments/profiles/baremetal_onprem"
+  cat > "${ROOT}/deployments/profiles/baremetal_onprem/deployment.meta.yaml" <<'YAML'
 profile_id: baremetal_onprem
 display_name: "BareMetal On-Prem"
 hosts:
@@ -551,22 +560,20 @@ policies:
 YAML
 fi
 
-# touch tech ecosystem sample inventory (empty CSV if not present)
-if [ ! -f "${META_FILES[3]}" ]; then
+# tech ecosystem inventory placeholder
+if [ ! -f "${ROOT}/tech_ecosystem/inventory/tech_ecosystem_inventory_v1.csv" ]; then
   mkdir -p "${ROOT}/tech_ecosystem/inventory"
-  cat > "${META_FILES[3]}" <<'CSV'
+  cat > "${ROOT}/tech_ecosystem/inventory/tech_ecosystem_inventory_v1.csv" <<'CSV'
 Tool Name,Category,Vendor,Usage / Use case,Cloud Support,Roles,Notes
-"ExampleTool","Category","Vendor","Use case","Cloud/Onprem","Role","Notes"
+ExampleTool,Category,Vendor,Use case,Cloud/Onprem,Role,Notes
 CSV
 fi
 
 echo "Scaffold creation complete."
+
 echo
 echo "Next steps:"
-echo "  - cd ${ROOT}"
-echo "  - git init  # if needed"
-echo "  - git add ."
-echo "  - git commit -m 'scaffold v1.1 - full company structure (baremetal & deployments)'"
-echo "  - push to your remote GitHub repository."
-
-exit 0
+echo "  cd ${ROOT}    # or remain in current directory if you used '.'"
+echo "  git add ."
+echo "  git commit -m 'scaffold v1.2 - full company structure with .gitkeep'"
+echo "  git push origin main"
