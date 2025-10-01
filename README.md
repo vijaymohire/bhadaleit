@@ -1,0 +1,1 @@
+Full folder creation script  
