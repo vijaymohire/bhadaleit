@@ -1,3 +1,57 @@
+# 🏗️ Bhadale IT Hub — Corporate Scaffold
+
+This directory contains the **full organizational and technical scaffold** for  
+the **Quantum AI Foundry** and associated Bhadale IT Hub operations.
+
+---
+
+## 🧭 Structure Overview
+
+```
+bhadaleit/
+├── corporate/ → Legal, compliance, investor relations
+├── delivery/ → Presales, operations, and delivery procedures
+├── qai_hub/ → Core frameworks, middleware, and runtime layers
+├── projects/ → Products, Services, Modernization, Research
+├── analytics/ → Metrics collection and investor reporting
+└── ...
+```
+
+---
+
+## ⚙️ Repository Scaffold Automation
+
+The scaffold was generated and maintained using:
+create_company_scaffold_full.sh
+
+
+This script creates:
+- Folder hierarchies
+- Default `README.md` and `.gitkeep` files
+- Classification headers
+- GitLab–GitHub synchronization references
+
+Use this only when initializing or updating the corporate base structure.
+
+---
+
+## 🔗 Key Subdirectories
+
+| Folder | Description |
+|---------|--------------|
+| `corporate/` | Legal, compliance, and investor relations documentation. |
+| `delivery/` | Partner, presales, and operational templates. |
+| `qai_hub/` | Core runtime, frameworks, middleware, and process definitions. |
+| `projects/` | The 4-pillars (Products, Services, Modernization, Research). |
+| `analytics/` | Automated metrics and investor reporting scripts. |
+
+---
+
+## 🧬 Integration with Private GitLab
+
+All confidential, financial, or patent-bound materials are synchronized from the private repository:
+bhadaleit-ip-hub/
+
 
 | GitLab Folder | Public Mirror |
 |----------------|----------------|
@@ -38,4 +92,8 @@
 ---
 
 _Last updated: {{2025-11-02}}_
+
+
+
+
 
