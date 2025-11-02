@@ -69,7 +69,7 @@ The Foundry’s R&D spans:
 ---
 
 ## 🌍 Quantum AI Ecosystem Architecture
-```
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/vijaymohire/vijaymohire/main/banner.svg" 
        alt="Bhadale IT Hub — Quantum AI Foundry" style="width:100%; max-height:280px; object-fit:cover;" />
@@ -141,14 +141,14 @@ The Foundry’s R&D spans:
 ---
 
 ## 🌍 Quantum AI Ecosystem Architecture
-
+```
 Bhadale IT Hub — QAI Foundry
 ├── Corporate (legal, investor, governance)
 ├── QAI Hub (server + middleware)
 ├── Products (Cloud, Processor, Datacenter, OS)
 ├── Research (applied + theoretical)
 └── QAI Mobile Units (Robotics, Drones, Humanoids)
-
+```
 ---
 
 ## 🧱 Global Vision
