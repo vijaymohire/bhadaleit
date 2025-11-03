@@ -89,7 +89,7 @@ Key objectives:
 | Qiskit Aer / |
 | QPU Simulator |
 +----------------+
-
+```
 ---
 
 ## 🧬 Integration Pathways
