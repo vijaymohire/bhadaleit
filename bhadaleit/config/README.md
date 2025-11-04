@@ -11,9 +11,9 @@ This directory governs the way **projects are created**, **environments are conf
 ## 📂 Folder Structure
 ```
 config/
-├── config.ini # Master configuration file for system-wide parameters
-├── cookiecutter.json # Project template generator for new QAI repositories
-├── environment_templates/ # Environment-specific setup templates (dev, test, prod)
+├── config.ini                # Master configuration file for system-wide parameters
+├── cookiecutter.json         # Project template generator for new QAI repositories
+├── environment_templates/    # Environment-specific setup templates (dev, test, prod)
 └── README.md
 ```
 
@@ -44,18 +44,20 @@ environment = hybrid
 processor_mode = quantum_classical
 datacenter_url = https://qai.bhadaleithub.net
 log_level = INFO
+```
 
----
-Usage:
+**Usage:**  
 Each system component imports and reads from this file at startup to ensure global parameter consistency.
 
-2. cookiecutter.json
+---
 
-Project scaffolding and repository template configuration.
+### 2. `cookiecutter.json`
+> _Project scaffolding and repository template configuration._
 
 This file defines templates for creating new projects, frameworks, or repositories with consistent structure and metadata under the Bhadale IT Hub ecosystem.
 
-Example:
+**Example:**
+```json
 {
   "project_name": "QAI_New_Module",
   "author_name": "Vijay Mohire",
@@ -65,42 +67,52 @@ Example:
   "use_ci_cd": "yes",
   "include_docs": "true"
 }
-Purpose:
+```
 
-Accelerates project bootstrapping
+**Purpose:**
+- Accelerates project bootstrapping  
+- Ensures documentation, configuration, and versioning consistency  
+- Enables alignment with internal standards for code, security, and compliance  
 
-Ensures documentation, configuration, and versioning consistency
+---
 
-Enables alignment with internal standards for code, security, and compliance
+### 3. `environment_templates/`
+> _Standardized environment setup templates for development, testing, and production._
 
-3. environment_templates/
+This subfolder includes multiple `.env` and `.yaml` templates for various contexts:
 
-Standardized environment setup templates for development, testing, and production.
-
-This subfolder includes multiple .env and .yaml templates for various contexts:
+```
 environment_templates/
 ├── dev.env
 ├── test.env
 ├── prod.env
 └── hybrid_cluster.yaml
+```
 
 Each environment template contains predefined variables and runtime profiles for QAI applications.
 
-Example (dev.env):
+**Example (`dev.env`):**
+```bash
 # Developer environment
 DEBUG=True
 DATABASE_URL=sqlite:///local_dev.db
 QAI_API_ENDPOINT=http://localhost:8000
 LOGGING_LEVEL=DEBUG
+```
 
-Example (prod.env):
+**Example (`prod.env`):**
+```bash
 # Production configuration
 DEBUG=False
 DATABASE_URL=postgresql://qai_prod_user@db.qai.net/qai_prod
 QAI_API_ENDPOINT=https://api.qai.bhadaleithub.com
 LOGGING_LEVEL=WARNING
+```
 
-⚙️ Configuration Hierarchy
+---
+
+## ⚙️ Configuration Hierarchy
+```
 [config.ini] → [environment_templates/] → [cookiecutter.json]
      |                 |                         |
      ▼                 ▼                         ▼
@@ -109,12 +121,16 @@ LOGGING_LEVEL=WARNING
      +-----------------+-------------------------+
                        ▼
           QAI Modules (Processor, OS, Hub, Delivery, etc.)
+```
 
-This hierarchy ensures a top-down configuration cascade, where defaults flow from config.ini, are overridden by environment templates, and project-specific metadata comes from cookiecutter.json.
+This hierarchy ensures a **top-down configuration cascade**, where defaults flow from `config.ini`, are overridden by environment templates, and project-specific metadata comes from `cookiecutter.json`.
 
-🔗 Integration Map
+---
+
+## 🔗 Integration Map
+
 | Connected Module   | Function                                                  |
-| ------------------ | --------------------------------------------------------- |
+|--------------------|-----------------------------------------------------------|
 | **QAI Hub**        | Reads global config to initialize frameworks and runtimes |
 | **QAI OS**         | Uses environment templates for process orchestration      |
 | **Analytics**      | Pulls log levels, report intervals, and source endpoints  |
@@ -122,20 +138,26 @@ This hierarchy ensures a top-down configuration cascade, where defaults flow fro
 | **Command Center** | Loads governance rules and system identifiers             |
 | **Research**       | Accesses config for simulation or model reproducibility   |
 
-🧭 Governance and Standards
+---
 
-Single Source of Truth:
+## 🧭 Governance and Standards
+
+**1. Single Source of Truth**  
 All configuration parameters must originate or be referenced through this directory.
 
-Version Control:
+**2. Version Control**  
 Configuration files (except local credentials) are versioned under Git.
 
-Separation of Secrets:
-Sensitive information (API keys, credentials) is stored in secure vaults, not in .env files.
+**3. Separation of Secrets**  
+Sensitive information (API keys, credentials) is stored in secure vaults, not in `.env` files.
 
-Environment Consistency:
-Templates ensure identical runtime behavior across environments (Dev → Staging → Production)
+**4. Environment Consistency**  
+Templates ensure identical runtime behavior across environments (Dev → Staging → Production).
 
+---
+
+## 💻 Example Usage in Python
+```python
 # Example: loading config.ini
 import configparser
 
@@ -146,41 +168,38 @@ org_name = config['GLOBAL']['organization']
 env = config['QAI']['environment']
 
 print(f"Running QAI module under {org_name} ({env} mode)")
+```
 
-🧠 Future Extensions
+---
 
-Introduce YAML-based hierarchical configuration (v2.0) for multi-cluster QAI deployments.
+## 🧠 Future Extensions
+- Introduce **YAML-based hierarchical configuration (v2.0)** for multi-cluster QAI deployments.  
+- Integrate **dynamic environment loaders** with QAI OS runtime modules.  
+- Add **security policy templates** for cryptographic and quantum-safe credentials.  
+- Enable **ConfigOps automation** with GitLab pipelines to auto-sync environment files.
 
-Integrate dynamic environment loaders with QAI OS runtime modules.
+---
 
-Add security policy templates for cryptographic and quantum-safe credentials.
-
-Enable ConfigOps automation with GitLab pipelines to auto-sync environment files.
-
-📘 Documentation Standards
-
+## 📘 Documentation Standards
 Each new configuration item must include:
 
-Parameter Name
+| Parameter | Type | Default | Description | Scope |
+|------------|------|----------|-------------|--------|
+| Name | string/int/bool/path | N/A | Parameter function | global/module/runtime/environment |
 
-Type (string, int, bool, path)
-
-Default Value
-
-Description
-
-Scope (global, module, runtime, or environment)
-
-Maintain configuration documentation in:
+Maintain configuration documentation in:  
+```
 config/CONFIG_REFERENCE.md
+```
 
-✳️ Maintainers
+---
 
-Configuration Architect: Vijay Mohire
+## ✳️ Maintainers
+- **Configuration Architect:** Vijay Mohire  
+- **Supporting Teams:** QAI Ops, DevOps, Security, and Platform Engineering  
+- **Linked Divisions:** Command Center, Research, Delivery, Analytics  
 
-Supporting Teams: QAI Ops, DevOps, Security, and Platform Engineering
+---
 
-Linked Divisions: Command Center, Research, Delivery, Analytics
-
-© 2025 Bhadale IT Hub — Global Configuration Framework
-“Consistency, Reproducibility, and Control — from Code to Quantum Cloud.”
+© 2025 **Bhadale IT Hub — Global Configuration Framework**  
+_“Consistency, Reproducibility, and Control — from Code to Quantum Cloud.”_
